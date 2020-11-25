@@ -6,7 +6,7 @@ import { api } from '../../utils/api';
 import { DEFAULT_MARKET, MarketAutocomplete, MarketOption } from '../MarketAutocomplete';
 import { OrderbookTable } from './OrderbookTable';
 
-export const Orderbook = (): JSX.Element|null => {
+export const Orderbook = (): JSX.Element => {
     const [market, setMarket] = useState<string>(DEFAULT_MARKET);
     const [orderbook, setOrderbook] = useState<any|null>(null);
     const handleChange = (e: React.ChangeEvent<{}>, option: MarketOption | null) => {
@@ -28,7 +28,7 @@ export const Orderbook = (): JSX.Element|null => {
 
     useInterval(fetcher, 1500);
 
-    if (!orderbook) return null;
+    if (!orderbook) return <div>Loading...</div>;
 
     const { asks, bids } = orderbook;
 
