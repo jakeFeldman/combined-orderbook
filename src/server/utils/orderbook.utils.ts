@@ -52,11 +52,13 @@ export const mergeBooks = (bittrex: any, poloniex: any, type: string) => {
     return bittrex.reduce((acc: Order[], current: Order, idx: number) => {
         const bittrexOrder = current;
         const poloniexOrder = poloniex[idx];
-        const addBittrex = type === 'bid'
-            ? bittrexOrder.rate < poloniexOrder.rate
-            : bittrexOrder.rate > poloniexOrder.rate;
-        const order = addBittrex ? bittrexOrder : poloniexOrder;
-        acc.push(order);
+        if (bittrexOrder && poloniexOrder) {
+            const addBittrex = type === 'bid'
+                ? bittrexOrder.rate < poloniexOrder.rate
+                : bittrexOrder.rate > poloniexOrder.rate;
+            const order = addBittrex ? bittrexOrder : poloniexOrder;
+            acc.push(order);
+        }
         return acc;
     }, []);
 };

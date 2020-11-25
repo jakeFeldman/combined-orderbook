@@ -7,7 +7,7 @@ import MuiTableHead from '@material-ui/core/TableHead';
 import MuiTableRow from '@material-ui/core/TableRow';
 import React from 'react';
 
-export const OrderbookTable = ({ data }: {
+export const OrderbookTable = ({ data = [] }: {
     data: Array<{
         quantity: number|string;
         rate: number|string;
