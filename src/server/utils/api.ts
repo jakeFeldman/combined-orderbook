@@ -1,57 +1,47 @@
 import axios from 'axios';
-
-type Params = {
-    [key:string]: any;
-}
+import { GenericObject } from 'src/shared/types';
 
 export const endpoints = {
-    /**
-     * Orderbook Example:
-     * https://api.bittrex.com/v3/markets/ETH-BTC/orderbook
-     */
     bittrex: 'https://api.bittrex.com/v3',
-    /**
-     * Orderbook Example:
-     * https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_ETH&depth=100
-     */
     poloniex: 'https://poloniex.com/public',
 };
 
 export const api = {
     bittrex: {
+        markets: {
+            get: (params: GenericObject = {}) => axios({
+                method: 'get',
+                url: `${endpoints.bittrex}/markets/`,
+                params,
+            })
+        },
         orderbook: {
-            get: (market: string, params: Params = {}) => axios({
+            get: (market: string, params: GenericObject = {}) => axios({
                 method: 'get',
                 url: `${endpoints.bittrex}/markets/${market}/orderbook/`,
                 params,
             })
         },
-        currencies: {
-            get: (params: Params = {}) => axios({
-                method: 'get',
-                url: `${endpoints.bittrex}/currencies/`,
-                params,
-            })
-        },
     },
     poloniex: {
+        markets: {
+            get: (params: GenericObject = {}) => axios({
+                method: 'get',
+                url: `${endpoints.poloniex}`,
+                params: {
+                    // Use returnTicker as a workaround to get list of all currency pairs (markets)
+                    command: 'returnTicker',
+                    ...params
+                }
+            })
+        },
         orderbook: {
-            get: (market: string, params: Params = {}) => axios({
+            get: (market: string, params: GenericObject = {}) => axios({
                 method: 'get',
                 url: `${endpoints.poloniex}`,
                 params: {
                     command: 'returnOrderBook',
                     currencyPair: market,
-                    ...params
-                }
-            })
-        },
-        currencies: {
-            get: (params: Params = {}) => axios({
-                method: 'get',
-                url: `${endpoints.poloniex}`,
-                params: {
-                    command: 'returnCurrencies',
                     ...params
                 }
             })
