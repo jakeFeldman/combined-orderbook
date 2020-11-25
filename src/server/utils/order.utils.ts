@@ -1,3 +1,5 @@
+import { Order } from 'src/server/types';
+
 type BittrexAskBid = {
     quantity: string;
     rate: string;
@@ -17,13 +19,9 @@ type PoloniexResponse = {
     seq: number;
 }
 
-export type Order = {
-    rate: string|number;
-    quantity: string|number;
-    total: number;
-    exchanges: string[];
-}
-
+/**
+ * @returns default order object
+ */
 export const makeOrder = ({ quantity, rate, exchange }: {
     quantity: string|number;
     rate: string;
@@ -36,7 +34,6 @@ export const makeOrder = ({ quantity, rate, exchange }: {
 });
 
 /**
- *
  * @param {BittrexResponse}
  */
 export const makeBittrexOrders = (response: BittrexResponse) => ({
@@ -53,7 +50,6 @@ export const makeBittrexOrders = (response: BittrexResponse) => ({
 });
 
 /**
- *
  * @param {PoloniexAskBid}
  */
 export const makePoloniexOrders = (response: PoloniexResponse) => ({

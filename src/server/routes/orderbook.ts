@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { api } from 'src/server/utils/api';
 import { makeBittrexOrders, makePoloniexOrders } from 'src/server/utils/order.utils';
-import { combinedOrderbook, makeExchangeParams } from 'src/server/utils/orderbook.utils';
+import { combineOrderbooks, makeExchangeParams } from 'src/server/utils/orderbook.utils';
 
 const orderbook = express.Router();
 
@@ -15,7 +15,7 @@ orderbook.get('/', async (req, res) => {
             api.bittrex.orderbook.get(bittrex, { depth }),
             api.poloniex.orderbook.get(poloniex, { depth }),
         ]);
-        return res.json(combinedOrderbook({
+        return res.json(combineOrderbooks({
             bittrex: makeBittrexOrders(bittrexOrderbook.data),
             poloniex: makePoloniexOrders(poloniexOrderbook.data),
         }));

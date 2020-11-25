@@ -1,6 +1,7 @@
 import { Request } from 'express';
+import { Order, Orderbooks } from 'src/server/types';
 import { ServerError } from 'src/server/utils/errors';
-import { makeOrder, Order } from 'src/server/utils/order.utils';
+import { /* makeOrder */ } from 'src/server/utils/order.utils';
 
 const orderbookDepth = (depth: string) => {
     const DEFAULT_DEPTH = '25';
@@ -40,29 +41,31 @@ export const makeExchangeParams = (query: Request['query']) => {
     };
 };
 
+/**
+ *
+ * @param bittrex
+ * @param poloniex
+ * @param type
+ */
 export const mergeBooks = (bittrex: any, poloniex: any, type: string) => {
-    // Using a defined depth bid and ask will always be the same length
+    // Using a defined depth bittrex and poloniex will always be the same length
     return bittrex.reduce((acc: Order[], current: Order, idx: number) => {
         const bittrexOrder = current;
         const poloniexOrder = poloniex[idx];
         const addBittrex = type === 'bid'
             ? bittrexOrder.rate < poloniexOrder.rate
             : bittrexOrder.rate > poloniexOrder.rate;
-
-        if (addBittrex) {
-            acc.push(bittrexOrder);
-        }
-        else if (bittrexOrder.rate === poloniexOrder.rate) {
-            // makeOrder()
-        }
-        else {
-            acc.push(poloniexOrder);
-        }
+        const order = addBittrex ? bittrexOrder : poloniexOrder;
+        acc.push(order);
         return acc;
     }, []);
 };
 
-export const combinedOrderbook = (books: any) => {
+/**
+ *
+ * @param books
+ */
+export const combineOrderbooks = (books: {bittrex: Orderbooks; poloniex: Orderbooks}) => {
     const { bittrex, poloniex } = books;
     const asks = mergeBooks(bittrex.asks, poloniex.asks, 'ask');
     const bids = mergeBooks(bittrex.bids, poloniex.bids, 'bid');

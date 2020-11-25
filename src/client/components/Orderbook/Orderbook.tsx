@@ -26,7 +26,7 @@ export const Orderbook = (): JSX.Element|null => {
         }
     }, [market]);
 
-    useInterval(fetcher, 500);
+    useInterval(fetcher, 1500);
 
     if (!orderbook) return null;
 
@@ -37,12 +37,12 @@ export const Orderbook = (): JSX.Element|null => {
             <MarketAutocomplete market={market} onChange={handleChange} />
             <Grid container justify="space-between">
                 <Grid item xs={12} sm={12} md={6}>
-                    <h1>Asks</h1>
-                    <OrderbookTable data={asks} />
-                </Grid>
-                <Grid item xs={12} sm={12} md={6}>
                     <h1>Bids</h1>
                     <OrderbookTable data={bids} />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                    <h1>Asks</h1>
+                    <OrderbookTable data={asks} />
                 </Grid>
             </Grid>
         </div>
