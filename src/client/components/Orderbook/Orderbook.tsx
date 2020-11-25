@@ -36,11 +36,11 @@ export const Orderbook = (): JSX.Element|null => {
         <div>
             <MarketAutocomplete market={market} onChange={handleChange} />
             <Grid container justify="space-between">
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <h1>Asks</h1>
                     <OrderbookTable data={asks} />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12} md={6}>
                     <h1>Bids</h1>
                     <OrderbookTable data={bids} />
                 </Grid>
