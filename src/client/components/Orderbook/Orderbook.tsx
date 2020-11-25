@@ -26,7 +26,7 @@ export const Orderbook = (): JSX.Element|null => {
         }
     }, [market]);
 
-    useInterval(fetcher, 1000);
+    useInterval(fetcher, 500);
 
     if (!orderbook) return null;
 

@@ -7,7 +7,7 @@ import MuiTableHead from '@material-ui/core/TableHead';
 import MuiTableRow from '@material-ui/core/TableRow';
 import React from 'react';
 
-export const OrderbookTable = ({ data }: { data: Array<unknown> }): JSX.Element|null => {
+export const OrderbookTable = ({ data }: { data: Array<unknown> }): JSX.Element => {
     return (
         <MuiTableContainer component={MuiPaper}>
             <MuiTable className="" size="small">
