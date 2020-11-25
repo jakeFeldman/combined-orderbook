@@ -5,9 +5,16 @@ const __DEV__ = process.env.NODE_ENV === 'development';
 
 module.exports = {
     mode: __DEV__ ? 'development' : 'production',
-    entry: path.resolve('src', 'client', 'index.tsx'),
+    entry: [
+        'regenerator-runtime',
+        path.resolve('src', 'client', 'index.tsx')
+    ],
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: [
+            '.tsx',
+            '.ts',
+            '.js'
+        ],
     },
     module: {
         rules: [
@@ -26,8 +33,8 @@ module.exports = {
         })
     ],
     output: {
-        filename: __DEV__ ? 'bundle.js' : 'bundle.[hash:8].js',
-        path: path.join(__dirname, 'public'),
+        filename: __DEV__ ? 'bundle.js' : 'bundle.[fullhash:8].js',
+        path: path.join(__dirname, 'dist'),
         publicPath: '/',
     },
     devServer: {
