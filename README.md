@@ -23,3 +23,7 @@ Running the dev server
 ```sh
 yarn dev
 ```
+
+## Todos
+
+- [ ] Add tests
